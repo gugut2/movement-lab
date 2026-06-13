@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://cq05gm4bqkodn"]
+
+[ext_resource type="Script" uid="uid://cpcxncy40xsn8" path="res://gerador_mapa.gd" id="1_m2sqd"]
+[ext_resource type="Script" uid="uid://hribhphnshae" path="res://player_logic.gd" id="1_rnpve"]
+[ext_resource type="Script" uid="uid://djcidlqb1wy0l" path="res://camera_topdown.gd" id="2_p20re"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p20re"]
+albedo_color = Color(0.29411766, 0.12941177, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_m2sqd"]
+material = SubResource("StandardMaterial3D_p20re")
+
+[sub_resource type="Environment" id="Environment_p20re"]
+
+[sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_m2sqd"]
+
+[sub_resource type="Compositor" id="Compositor_ho7oe"]
+
+[node name="Mundo" type="Node3D" unique_id=840560460]
+script = ExtResource("1_m2sqd")
+
+[node name="Player" type="Node3D" parent="." unique_id=935013909]
+script = ExtResource("1_rnpve")
+
+[node name="PlayerCapsule" type="MeshInstance3D" parent="Player" unique_id=1902680256]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_m2sqd")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1188609502]
+environment = SubResource("Environment_p20re")
+camera_attributes = SubResource("CameraAttributesPhysical_m2sqd")
+compositor = SubResource("Compositor_ho7oe")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1322062268]
+transform = Transform3D(0.8777864, 0.17167409, -0.44723478, -0.020661779, 0.94628143, 0.32268375, 0.47860637, -0.2740067, 0.83418006, 0, 5.8213696, 0)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=930726851]
+script = ExtResource("2_p20re")
+
+[node name="ChunksContainer" type="Node3D" parent="." unique_id=1090619442]

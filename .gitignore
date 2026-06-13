@@ -1,0 +1,16 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Arquivos de build e cache da Godot
+.import/
+export_presets.cfg
+
+# Arquivos específicos de ferramentas/ambientes
+.mono/
+data_*/
+mono_crash_*.log
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
