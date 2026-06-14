@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://cjqa2fe7sy2cy"]
+
+[ext_resource type="Script" uid="uid://cf2ukivr27au1" path="res://gerador_espiral.gd" id="1_3hvph"]
+[ext_resource type="Script" uid="uid://hribhphnshae" path="res://player_logic.gd" id="1_g28hq"]
+[ext_resource type="Script" uid="uid://djcidlqb1wy0l" path="res://camera_topdown.gd" id="3_8dm54"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m2sqd"]
+albedo_color = Color(0.29411766, 0.12941177, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_jcpy2"]
+material = SubResource("StandardMaterial3D_m2sqd")
+
+[sub_resource type="Curve" id="Curve_nfnsu"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.9974811, 0), 0.06156303, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ho7oe"]
+curve = SubResource("Curve_nfnsu")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_64ein"]
+angle_min = 1.0728835e-05
+angle_max = 360.00003
+spread = 60.0
+initial_velocity_min = 1.5
+initial_velocity_max = 4.0
+gravity = Vector3(0, 0.8, 0)
+damping_min = 3.0000002
+damping_max = 5.0
+scale_curve = SubResource("CurveTexture_ho7oe")
+turbulence_enabled = true
+turbulence_noise_strength = 1.5
+turbulence_influence_max = 0.3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nmhtg"]
+transparency = 1
+albedo_color = Color(0.8151441, 0.8151441, 0.8151441, 0.47058824)
+
+[sub_resource type="SphereMesh" id="SphereMesh_2ukta"]
+material = SubResource("StandardMaterial3D_nmhtg")
+radius = 0.15
+height = 0.3
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8dm54"]
+
+[sub_resource type="Environment" id="Environment_72l6d"]
+
+[sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_112sm"]
+
+[sub_resource type="Compositor" id="Compositor_vuhtq"]
+
+[node name="Mundo2" type="Node3D" unique_id=1050409398]
+script = ExtResource("1_3hvph")
+
+[node name="Player" type="Area3D" parent="." unique_id=1603211966]
+script = ExtResource("1_g28hq")
+
+[node name="PlayerCapsule" type="MeshInstance3D" parent="Player" unique_id=601155395]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_jcpy2")
+
+[node name="DustParticles" type="GPUParticles3D" parent="Player" unique_id=975104832]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+amount = 25
+lifetime = 0.4
+process_material = SubResource("ParticleProcessMaterial_64ein")
+draw_pass_1 = SubResource("SphereMesh_2ukta")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=1606737448]
+shape = SubResource("CapsuleShape3D_8dm54")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2008443326]
+environment = SubResource("Environment_72l6d")
+camera_attributes = SubResource("CameraAttributesPhysical_112sm")
+compositor = SubResource("Compositor_vuhtq")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=506184822]
+transform = Transform3D(0.8777864, 0.17167409, -0.44723478, -0.020661779, 0.94628143, 0.32268375, 0.47860637, -0.2740067, 0.83418006, 0, 5.8213696, 0)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1100819316]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 20, 0)
+script = ExtResource("3_8dm54")
